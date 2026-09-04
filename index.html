@@ -1,0 +1,1269 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ODISSEY — Catálogo Streetwear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-card: #161616;
+      --border: #2a2a2a;
+      --border-light: #333333;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --text-muted: #666666;
+      --accent: #ffffff;
+      --tag-bg: #1e1e1e;
+      --whatsapp: #25d366;
+      --whatsapp-dark: #1da851;
+      --overlay: rgba(0, 0, 0, 0.85);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: #fff; color: #000; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+    .logo img {
+      height: 108px;
+      width: auto;
+    }
+
+    nav { display: flex; gap: 20px; align-items: center; }
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    nav a:hover { color: var(--text-primary); }
+    nav a svg { width: 22px; height: 22px; }
+
+    .hero {
+      text-align: center;
+      padding: 80px 24px 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 8vw, 80px);
+      letter-spacing: 6px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 24px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 8px 20px;
+      border-radius: 24px;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      transition: all var(--transition);
+    }
+
+    .filter-btn:hover { border-color: var(--border-light); color: var(--text-primary); }
+    .filter-btn.active { background: var(--text-primary); color: var(--bg-primary); border-color: var(--text-primary); }
+
+    .search-bar {
+      flex: 1;
+      max-width: 320px;
+      margin: 0 20px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 12px 20px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color var(--transition);
+    }
+
+    .search-bar input::placeholder { color: var(--text-muted); }
+    .search-bar input:focus { border-color: var(--border-light); }
+
+    .results-count {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    .product-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all var(--transition);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .product-card:hover {
+      border-color: var(--border-light);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .product-image-wrap {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    .product-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .product-card:hover .product-image-wrap img { transform: scale(1.05); }
+
+    .product-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+    }
+
+    .product-info { padding: 16px; }
+    .product-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+
+    .product-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .product-price.consult {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--text-muted);
+    }
+
+    .no-results h3 { font-size: 24px; margin-bottom: 8px; color: var(--text-secondary); }
+
+
+
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    footer a { color: var(--text-secondary); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 48px 24px 24px; }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding: 0 16px 60px; }
+    }
+
+    @media (max-width: 480px) {
+      .logo img { height: 80px; }
+      .product-grid { grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 12px 60px; }
+      .product-info { padding: 10px; }
+      .product-name { font-size: 12px; }
+      .product-price { font-size: 14px; }
+      nav { gap: 12px; }
+      nav a { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="#" class="logo"><img src="img/odissey%20logo/etiquetas%20odissey%20(6).svg" alt="Odissey Logo"></a>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar prenda...">
+      </div>
+      <nav>
+        <a href="https://api.whatsapp.com/send/?phone=584141895347&text=%21Hola%21%20Quisiera%20saber%20informaci%C3%B3n%20sobre...." target="_blank" rel="noopener" title="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/odissey.ve/?hl=es" target="_blank" rel="noopener" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>CATÁLOGO STREETWEAR</h1>
+    <p>Prendas exclusivas para quienes marcan la diferencia. Envíos a toda Venezuela.</p>
+  </section>
+
+  <section class="filters" id="catalogo">
+    <button class="filter-btn active" data-filter="todos">Todos</button>
+    <button class="filter-btn" data-filter="franela-oversize">Franelas Oversize</button>
+    <button class="filter-btn" data-filter="franela-nba">Franelas NBA</button>
+    <button class="filter-btn" data-filter="franela-mlb">Franelas MLB</button>
+    <button class="filter-btn" data-filter="gorras">Gorras</button>
+    <button class="filter-btn" data-filter="franela-f1">Franelas F1</button>
+  </section>
+
+  <p class="results-count" id="resultsCount"></p>
+
+  <section class="product-grid" id="productGrid"></section>
+
+  <footer>
+    <p>&copy; 2026 ODISSEY — <a href="https://instagram.com/odissey.store" target="_blank">@odissey.store</a></p>
+  </footer>
+
+  <script>
+    // ═══════════════════════════════════════════════════════════
+    //  CONFIGURACIÓN — Personaliza tus productos aquí
+    // ═══════════════════════════════════════════════════════════
+
+    const products = [
+      {
+        id: 59,
+        name: "Franela Oversize Blessed",
+        category: "franela-oversize",
+        categoryLabel: "Franela Oversize",
+        price: "$20",
+        images: [
+          "img/Franelas%20Oversize/1/WhatsApp%20Image%202026-09-04%20at%202.20.26%20PM.jpeg",
+          "img/Franelas%20Oversize/1/WhatsApp%20Image%202026-09-04%20at%202.20.26%20PM%20(1).jpeg"
+          
+        ],
+        description: "Franela oversize 100% algodón con caída perfecta para streetwear. Diseño exclusivo con acabado premium. Disponible en tallas M, L y XL.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 60,
+        name: "Franela Oversize Glory",
+        category: "franela-oversize",
+        categoryLabel: "Franela Oversize",
+        price: "$20",
+        images: [
+          "img/Franelas%20Oversize/2/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM.jpeg",
+          "img/Franelas%20Oversize/2/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(1).jpeg"
+          
+        ],
+        description: "Franela oversize con corte contemporáneo y tela pesada y suave. Diseño exclusivo, ideal para looks urbanos. Tallas M, L y XL.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 61,
+        name: "Franela Oversize Something",
+        category: "franela-oversize",
+        categoryLabel: "Franela Oversize",
+        price: "$20",
+        images: [
+          "img/Franelas%20Oversize/3/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(2).jpeg",
+          "img/Franelas%20Oversize/3/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(3).jpeg"
+        ],
+        description: "Franela oversize 240gsm con silueta relajada. Estampado exclusivo y costuras reforzadas. Tallas M, L y XL.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 62,
+        name: "Franela Oversize Persistence",
+        category: "franela-oversize",
+        categoryLabel: "Franela Oversize",
+        price: "$20",
+        images: [
+          "img/Franelas%20Oversize/4/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(4).jpeg",
+          "img/Franelas%20Oversize/4/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(5).jpeg"
+        ],
+        description: "Franela oversize con diseño premium y caída impecable. Algodón peinado para máximo confort. Tallas M, L y XL.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 63,
+        name: "Franela Oversize Future",
+        category: "franela-oversize",
+        categoryLabel: "Franela Oversize",
+        price: "$20",
+        images: [
+          "img/Franelas%20Oversize/5/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(6).jpeg",
+          "img/Franelas%20Oversize/5/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(7).jpeg"
+        ],
+        description: "Franela oversize con estampado exclusivo y acabados limpios. Corte oversized contemporáneo. Tallas M, L y XL.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 64,
+        name: "Franela Oversize The Pain",
+        category: "franela-oversize",
+        categoryLabel: "Franela Oversize",
+        price: "$20",
+        images: [
+          "img/Franelas%20Oversize/6/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(10).jpeg",
+          "img/Franelas%20Oversize/6/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(11).jpeg"
+        ],
+        description: "Franela oversize de alta calidad con diseño urbano. Tela suave y pesada para un fit perfecto. Tallas M, L y XL.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 65,
+        name: "Franela Oversize Live",
+        category: "franela-oversize",
+        categoryLabel: "Franela Oversize",
+        price: "$20",
+        images: [
+          "img/Franelas%20Oversize/7/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(8).jpeg",
+          "img/Franelas%20Oversize/7/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(9).jpeg"
+        ],
+        description: "Franela oversize con estética streetwear superior. Algodón premium y silueta relajada. Tallas M, L y XL.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 66,
+        name: "Franela Oversize The God",
+        category: "franela-oversize",
+        categoryLabel: "Franela Oversize",
+        price: "$20",
+        images: [
+          "img/Franelas%20Oversize/8/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(12).jpeg",
+          "img/Franelas%20Oversize/8/WhatsApp%20Image%202026-09-04%20at%202.29.16%20PM%20(13).jpeg"
+        ],
+        description: "Franela oversize con diseño exclusivo y acabado premium. Ideal para looks urbanos relajados. Tallas M, L y XL.",
+        sizes: ["M", "L", "XL"]
+      },
+      {
+        id: 5,
+        name: "Franela NBA 1",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/1.jpeg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 6,
+        name: "Franela NBA 2",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/2.jpeg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 7,
+        name: "Franela NBA 3",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/3.jpeg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 8,
+        name: "Franela NBA 4",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/4.jpeg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 9,
+        name: "Franela NBA 5",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/5.jpeg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 10,
+        name: "Franela NBA 6",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/6.jpeg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 11,
+        name: "Franela NBA 10",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20250911-WA0112.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 12,
+        name: "Franela NBA 11",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20250911-WA0114.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 13,
+        name: "Franela NBA 12",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20250911-WA0123.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 14,
+        name: "Franela NBA 13",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260117-WA0236.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 15,
+        name: "Franela NBA 14",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260117-WA0248.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 16,
+        name: "Franela NBA 15",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260117-WA0252.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 17,
+        name: "Franela NBA 16",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260427-WA0072.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 18,
+        name: "Franela NBA 17",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260427-WA0076.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 19,
+        name: "Franela NBA 18",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260427-WA0080.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 20,
+        name: "Franela NBA 19",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260427-WA0088.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 21,
+        name: "Franela NBA 20",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260801-WA0164.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 22,
+        name: "Franela NBA 21",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260801-WA0274(1).jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 23,
+        name: "Franela NBA 22",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260801-WA0275(1).jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 24,
+        name: "Franela NBA 23",
+        category: "franela-nba",
+        categoryLabel: "Franela NBA",
+        price: "$20",
+        images: ["img/nba/IMG-20260801-WA0281.jpg"],
+        description: "Franela NBA de alta calidad. Diseño exclusivo para los amantes del baloncesto y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 25,
+        name: "Franela MLB 1",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20250709-WA0031.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 26,
+        name: "Franela MLB 2",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20250828-WA0065.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 27,
+        name: "Franela MLB 3",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20251111-WA0156.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 28,
+        name: "Franela MLB 4",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20251111-WA0180.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 29,
+        name: "Franela MLB 5",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20251111-WA0184.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 30,
+        name: "Franela MLB 6",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20251111-WA0188.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 31,
+        name: "Franela MLB 7",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20251111-WA0192.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 32,
+        name: "Franela MLB 8",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20251205-WA0139.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 33,
+        name: "Franela MLB 9",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260122-WA0243.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 34,
+        name: "Franela MLB 10",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260122-WA0247.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 35,
+        name: "Franela MLB 11",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260122-WA0255.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 36,
+        name: "Franela MLB 12",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260122-WA0259.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 37,
+        name: "Franela MLB 13",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260420-WA0097.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 38,
+        name: "Franela MLB 14",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260420-WA0105.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 39,
+        name: "Franela MLB 15",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260420-WA0113.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 40,
+        name: "Franela MLB 16",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260420-WA0121.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 41,
+        name: "Franela MLB 17",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260420-WA0125.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 42,
+        name: "Franela MLB 18",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260420-WA0133.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 43,
+        name: "Franela MLB 19",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260420-WA0137.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 44,
+        name: "Franela MLB 20",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260513-WA0085.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 45,
+        name: "Franela MLB 21",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260711-WA0067.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 46,
+        name: "Franela MLB 22",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260711-WA0069.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 47,
+        name: "Franela MLB 23",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260711-WA0072.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 48,
+        name: "Franela MLB 24",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260711-WA0074.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 49,
+        name: "Franela MLB 25",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260711-WA0076.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 50,
+        name: "Franela MLB 26",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260711-WA0078.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 51,
+        name: "Franela MLB 27",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260728-WA0228.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 52,
+        name: "Franela MLB 28",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260728-WA0230.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 53,
+        name: "Franela MLB 29",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260728-WA0233.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 54,
+        name: "Franela MLB 30",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260728-WA0234.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 55,
+        name: "Franela MLB 31",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260728-WA0235.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 56,
+        name: "Franela MLB 32",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260728-WA0236.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 57,
+        name: "Franela MLB 33",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260728-WA0238.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 58,
+        name: "Franela MLB 34",
+        category: "franela-mlb",
+        categoryLabel: "Franela MLB",
+        price: "$20",
+        images: ["img/mlb/IMG-20260728-WA0239.jpg"],
+        description: "Franela MLB de alta calidad. Diseño exclusivo para los amantes del béisbol y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 301,
+        name: "Gorra Bravos",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Bravos%20Talla%20Ajustable/1.jpeg",
+          "img/Gorras/Bravos%20Talla%20Ajustable/2.jpeg",
+          "img/Gorras/Bravos%20Talla%20Ajustable/3.jpeg"
+        ],
+        description: "Gorra Bravos con diseño exclusivo. Talla ajustable, estilo streetwear premium.",
+        sizes: ["Ajustable"]
+      },
+      {
+        id: 302,
+        name: "Gorra Chicago White Sox 2",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Chicago%20White%20Sox%202%20Talla%20Ajustable/1.jpeg",
+          "img/Gorras/Chicago%20White%20Sox%202%20Talla%20Ajustable/2.jpeg",
+          "img/Gorras/Chicago%20White%20Sox%202%20Talla%20Ajustable/3.jpeg"
+        ],
+        description: "Gorra Chicago White Sox edición especial. Talla ajustable, acabado premium.",
+        sizes: ["Ajustable"]
+      },
+      {
+        id: 303,
+        name: "Gorra Chicago White Sox",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Chicago%20White%20Sox%20Talla%207%203-8/1.jpeg",
+          "img/Gorras/Chicago%20White%20Sox%20Talla%207%203-8/2.jpeg",
+          "img/Gorras/Chicago%20White%20Sox%20Talla%207%203-8/3.jpeg",
+          "img/Gorras/Chicago%20White%20Sox%20Talla%207%203-8/4.jpeg"
+        ],
+        description: "Gorra Chicago White Sox clásica. Talla 7 3/8, diseño auténtico MLB.",
+        sizes: ["7 3/8"]
+      },
+      {
+        id: 304,
+        name: "Gorra Detroit Tigers",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Detroit%20Tigers%20Talla%207%203-8/1.jpeg",
+          "img/Gorras/Detroit%20Tigers%20Talla%207%203-8/2.jpeg",
+          "img/Gorras/Detroit%20Tigers%20Talla%207%203-8/3.jpeg",
+          "img/Gorras/Detroit%20Tigers%20Talla%207%203-8/4.jpeg"
+        ],
+        description: "Gorra Detroit Tigers oficial. Talla 7 3/8, estilo trucker clásico.",
+        sizes: ["7 3/8"]
+      },
+      {
+        id: 305,
+        name: "Gorra Houston Astros",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Houston%20Astros%20Talla%207%203-8/1.jpeg",
+          "img/Gorras/Houston%20Astros%20Talla%207%203-8/2.jpeg",
+          "img/Gorras/Houston%20Astros%20Talla%207%203-8/3.jpeg",
+          "img/Gorras/Houston%20Astros%20Talla%207%203-8/4.jpeg"
+        ],
+        description: "Gorra Houston Astros con diseño exclusivo. Talla 7 3/8, calidad premium.",
+        sizes: ["7 3/8"]
+      },
+      {
+        id: 306,
+        name: "Gorra Los Angeles 2",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Los%20Angeles%202%20Talla%207%203-8/1.jpeg",
+          "img/Gorras/Los%20Angeles%202%20Talla%207%203-8/2.jpeg",
+          "img/Gorras/Los%20Angeles%202%20Talla%207%203-8/3.jpeg",
+          "img/Gorras/Los%20Angeles%202%20Talla%207%203-8/4.jpeg"
+        ],
+        description: "Gorra Los Angeles edición 2. Talla 7 3/8, estilo urbano streetwear.",
+        sizes: ["7 3/8"]
+      },
+      {
+        id: 307,
+        name: "Gorra Los Angeles 3",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Los%20Angeles%203%20Talla%20Ajustable/1.jpeg",
+          "img/Gorras/Los%20Angeles%203%20Talla%20Ajustable/2.jpeg",
+          "img/Gorras/Los%20Angeles%203%20Talla%20Ajustable/3.jpeg"
+        ],
+        description: "Gorra Los Angeles edición 3. Talla ajustable, diseño exclusivo premium.",
+        sizes: ["Ajustable"]
+      },
+      {
+        id: 308,
+        name: "Gorra Los Angeles",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Los%20Angeles%20Talla%207%203-8/1.jpeg",
+          "img/Gorras/Los%20Angeles%20Talla%207%203-8/2.jpeg",
+          "img/Gorras/Los%20Angeles%20Talla%207%203-8/3.jpeg",
+          "img/Gorras/Los%20Angeles%20Talla%207%203-8/4.jpeg"
+        ],
+        description: "Gorra Los Angeles clásica. Talla 7 3/8, acabado auténtico MLB.",
+        sizes: ["7 3/8"]
+      },
+      {
+        id: 309,
+        name: "Gorra Toronto Blue Jays",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Toronto%20Blue%20Jays%20Talla%20Ajustable/1.jpeg",
+          "img/Gorras/Toronto%20Blue%20Jays%20Talla%20Ajustable/2.jpeg",
+          "img/Gorras/Toronto%20Blue%20Jays%20Talla%20Ajustable/3.jpeg"
+        ],
+        description: "Gorra Toronto Blue Jays con diseño exclusivo. Talla ajustable, estilo premium.",
+        sizes: ["Ajustable"]
+      },
+      {
+        id: 310,
+        name: "Gorra Yankees 2",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Yankees%202%20Talla%20Ajustable/1.jpeg",
+          "img/Gorras/Yankees%202%20Talla%20Ajustable/2.jpeg",
+          "img/Gorras/Yankees%202%20Talla%20Ajustable/3.jpeg"
+        ],
+        description: "Gorra Yankees edición 2. Talla ajustable, diseño icónico streetwear.",
+        sizes: ["Ajustable"]
+      },
+      {
+        id: 311,
+        name: "Gorra Yankees",
+        category: "gorras",
+        categoryLabel: "Gorras",
+        price: "$25",
+        images: [
+          "img/Gorras/Yankees%20Talla%207%203-8/1.jpeg",
+          "img/Gorras/Yankees%20Talla%207%203-8/2.jpeg",
+          "img/Gorras/Yankees%20Talla%207%203-8/3.jpeg",
+          "img/Gorras/Yankees%20Talla%207%203-8/4.jpeg"
+        ],
+        description: "Gorra Yankees clásica. Talla 7 3/8, el ícono del streetwear.",
+        sizes: ["7 3/8"]
+      },
+      {
+        id: 69,
+        name: "Franela F1 1",
+        category: "franela-f1",
+        categoryLabel: "Franela F1",
+        price: "$20",
+        images: ["img/f1/1.jpeg"],
+        description: "Franela F1 de alta calidad. Diseño exclusivo para los amantes de la Fórmula 1 y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 70,
+        name: "Franela F1 2",
+        category: "franela-f1",
+        categoryLabel: "Franela F1",
+        price: "$20",
+        images: ["img/f1/2.jpeg"],
+        description: "Franela F1 de alta calidad. Diseño exclusivo para los amantes de la Fórmula 1 y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 71,
+        name: "Franela F1 3",
+        category: "franela-f1",
+        categoryLabel: "Franela F1",
+        price: "$25",
+        images: ["img/f1/3.jpeg"],
+        description: "Franela F1 de alta calidad. Diseño exclusivo para los amantes de la Fórmula 1 y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 72,
+        name: "Franela F1 4",
+        category: "franela-f1",
+        categoryLabel: "Franela F1",
+        price: "$20",
+        images: ["img/f1/4.jpg"],
+        description: "Franela F1 de alta calidad. Diseño exclusivo para los amantes de la Fórmula 1 y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 73,
+        name: "Franela F1 5",
+        category: "franela-f1",
+        categoryLabel: "Franela F1",
+        price: "$20",
+        images: ["img/f1/5.jpg"],
+        description: "Franela F1 de alta calidad. Diseño exclusivo para los amantes de la Fórmula 1 y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+      {
+        id: 74,
+        name: "Franela F1 6",
+        category: "franela-f1",
+        categoryLabel: "Franela F1",
+        price: "$20",
+        images: ["img/f1/6.jpg"],
+        description: "Franela F1 de alta calidad. Diseño exclusivo para los amantes de la Fórmula 1 y el streetwear.",
+        sizes: ["S", "M", "L", "XL"]
+      },
+    ];
+
+    // ═══════════════════════════════════════════════════════════
+    //  STATE
+    // ═══════════════════════════════════════════════════════════
+
+    let currentFilter = "todos";
+    let searchQuery = "";
+
+    const productGrid = document.getElementById("productGrid");
+    const resultsCount = document.getElementById("resultsCount");
+    const searchInput = document.getElementById("searchInput");
+
+    // ═══════════════════════════════════════════════════════════
+    //  RENDER
+    // ═══════════════════════════════════════════════════════════
+
+    function getFilteredProducts() {
+      return products.filter(p => {
+        const matchCategory = currentFilter === "todos" || p.category === currentFilter;
+        const matchSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery) || p.description.toLowerCase().includes(searchQuery);
+        return matchCategory && matchSearch;
+      });
+    }
+
+    function renderProducts() {
+      const filtered = getFilteredProducts();
+      resultsCount.textContent = filtered.length + " producto" + (filtered.length !== 1 ? "s" : "") + " encontrado" + (filtered.length !== 1 ? "s" : "");
+
+      if (filtered.length === 0) {
+        productGrid.innerHTML = '<div class="no-results"><h3>Sin resultados</h3><p>No se encontraron productos para esta búsqueda.</p></div>';
+        return;
+      }
+
+      productGrid.innerHTML = filtered.map(function(p) {
+        return '<a class="product-card" href="product-detail.html?id=' + p.id + '">' +
+          '<div class="product-image-wrap">' +
+            '<img src="' + p.images[0] + '" alt="' + p.name + '" loading="lazy" class="product-main-img">' +
+            '<span class="product-tag">' + p.categoryLabel + '</span>' +
+          '</div>' +
+          '<div class="product-info">' +
+            '<p class="product-name">' + p.name + '</p>' +
+            '<p class="product-price' + (p.price === 'Consultar precio' ? ' consult' : '') + '">' + p.price + '</p>' +
+          '</div>' +
+        '</a>';
+      }).join("");
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    //  FILTERS
+    // ═══════════════════════════════════════════════════════════
+
+    document.querySelectorAll(".filter-btn").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        document.querySelectorAll(".filter-btn").forEach(function(b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
+        renderProducts();
+        document.getElementById("catalogo").scrollIntoView({ behavior: "smooth" });
+      });
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    //  SEARCH
+    // ═══════════════════════════════════════════════════════════
+
+    var searchTimeout;
+    searchInput.addEventListener("input", function(e) {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(function() {
+        searchQuery = e.target.value.toLowerCase().trim();
+        renderProducts();
+      }, 300);
+    });
+
+    // ═══════════════════════════════════════════════════════════
+    //  INIT
+    // ═══════════════════════════════════════════════════════════
+
+    renderProducts();
+  </script>
+</body>
+</html>
